@@ -1,1 +1,2 @@
-Vedantsinh's Portfolio
+Vedantsinh Portfolio
+
