@@ -2,10 +2,13 @@ import { ValidationError, useForm } from "@formspree/react";
 import { motion } from "framer-motion";
 import { useAtom } from "jotai";
 import { Canvas,useLoader } from '@react-three/fiber';
-import {  useEffect,useRef } from 'react';
+import {  useState,useEffect,useRef } from 'react';
 import { OrbitControls } from "@react-three/drei";
 import { TextureLoader } from "three";
 import { currentProjectAtom, projects } from "./Projects";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGithub,faLinkedin } from '@fortawesome/free-brands-svg-icons';
+import { FaPhoneAlt, FaMapMarkerAlt } from "react-icons/fa";
 import {
   javascript,
   typescript,
@@ -21,7 +24,6 @@ import {
   docker,
   threejs,
 } from "../assets";
-import { FaUser } from 'react-icons/fa';
 
 
 const Section = (props) => {
@@ -81,6 +83,17 @@ const AboutSection = (props) => {
 
   return (
     <Section mobileTop>
+      <div className="flex fixed top-4 left-4">
+      {/* GitHub Link */}
+      <a href="https://github.com/Vedant-2116" target="_blank" rel="noopener noreferrer" className="github-icon">
+        <FontAwesomeIcon icon={faGithub} className="text-gray-600 w-8 h-8 mr-2 md:mr-4" />
+      </a>
+      {/* LinkedIn Link */}
+      <a href="https://www.linkedin.com/in/gohelvedant/" target="_blank" rel="noopener noreferrer" className="linkedin-icon">
+        <FontAwesomeIcon icon={faLinkedin} className="text-gray-600 w-8 h-8 mr-2 md:mr-4" />
+      </a>
+    </div>
+
       <div className="flex items-center">
         <h1 className="text-4xl md:text-6xl font-extrabold leading-snug mt-8 md:mt-0">
           Hello, I'm
@@ -172,6 +185,8 @@ const AboutSection = (props) => {
     </Section>
   );
 };
+
+
 
 
 
@@ -329,65 +344,104 @@ const ProjectsSection = () => {
 
 const ContactSection = () => {
   const [state, handleSubmit] = useForm("mayzgjbd");
+  const [phoneNumber] = useState("+19056171621");
+  const address = "960 Markham Rd, Scarborough, ON M1H 2Y4";
+
+  const handlePhoneClick = () => {
+    window.location.href = `tel:${phoneNumber}`;
+  };
+
+  const handleLocationClick = () => {
+    window.open("https://www.google.com/maps/place/960+Markham+Rd,+Scarborough,+ON+M1H+2Y4/@43.7717186,-79.2310163,155m/data=!3m1!1e3!4m6!3m5!1s0x89d4d114176c4e23:0xd9a959eb12c5ac88!8m2!3d43.7716896!4d-79.230209!16s%2Fg%2F11vs7vfz0q?entry=ttu");
+  };
+
   return (
-    <Section>
-      <h2 className="text-3xl md:text-5xl font-bold">Contact me</h2>
-      <div className="mt-8 p-8 rounded-md bg-white bg-opacity-50 w-96 max-w-full">
-        {state.succeeded ? (
-          <p className="text-gray-900 text-center">Thanks for your message !</p>
-        ) : (
-          <form onSubmit={handleSubmit}>
-            <label for="name" className="font-medium text-gray-900 block mb-1">
-              Name
-            </label>
-            <input
-              type="text"
-              name="name"
-              id="name"
-              className="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 p-3"
-            />
-            <label
-              for="email"
-              className="font-medium text-gray-900 block mb-1 mt-8"
-            >
-              Email
-            </label>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              className="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 p-3"
-            />
-            <ValidationError
-              className="mt-1 text-red-500"
-              prefix="Email"
-              field="email"
-              errors={state.errors}
-            />
-            <label
-              for="email"
-              className="font-medium text-gray-900 block mb-1 mt-8"
-            >
-              Message
-            </label>
-            <textarea
-              name="message"
-              id="message"
-              className="h-32 block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 p-3"
-            />
-            <ValidationError
-              className="mt-1 text-red-500"
-              errors={state.errors}
-            />
-            <button
-              disabled={state.submitting}
-              className="bg-indigo-600 text-white py-4 px-8 rounded-lg font-bold text-lg mt-16 "
-            >
-              Submit
-            </button>
-          </form>
-        )}
+<Section>
+  <h2 className="text-3xl md:text-5xl font-bold">Contact me</h2>
+  <form onSubmit={handleSubmit}>
+    <div className="flex">
+      <div className="mt-8 p-8 rounded-md w-96 max-w-full mr-4">
+        {/* Phone Number */}
+        <div className="flex items-center mb-4">
+          <FaPhoneAlt
+            onClick={handlePhoneClick}
+            className="text-indigo-600 cursor-pointer"
+            size={24}
+          />
+          <p className="ml-4 text-gray-800 text-lg">{phoneNumber}</p>
+        </div>
       </div>
-    </Section>
+
+      <div className="mt-8 p-8 rounded-md w-96 max-w-full">
+        {/* Address */}
+        <div className="flex items-center">
+          <FaMapMarkerAlt
+            onClick={handleLocationClick}
+            className="text-indigo-600 cursor-pointer"
+            size={24}
+          />
+          <p className="ml-4 text-gray-800 text-lg">{address}</p>
+        </div>
+      </div>
+    </div>
+
+    <div className="mt-8 p-8 rounded-md bg-white bg-opacity-50 w-96 max-w-full">
+      {state.succeeded ? (
+        <p className="text-gray-900 text-center">Thanks for your message!</p>
+      ) : (
+        <>
+          <label htmlFor="name" className="font-medium text-gray-900 block mb-1">
+            Name
+          </label>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            className="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 p-3"
+          />
+          <label
+            htmlFor="email"
+            className="font-medium text-gray-900 block mb-1 mt-8"
+          >
+            Email
+          </label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            className="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 p-3"
+          />
+          <ValidationError
+            className="mt-1 text-red-500"
+            prefix="Email"
+            field="email"
+            errors={state.errors}
+          />
+          <label
+            htmlFor="message"
+            className="font-medium text-gray-900 block mb-1 mt-8"
+          >
+            Message
+          </label>
+          <textarea
+            name="message"
+            id="message"
+            className="h-32 block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 p-3"
+          />
+          <ValidationError
+            className="mt-1 text-red-500"
+            errors={state.errors}
+          />
+          <button
+            disabled={state.submitting}
+            className="bg-indigo-600 text-white py-4 px-8 rounded-lg font-bold text-lg mt-16 "
+          >
+            Submit
+          </button>
+        </>
+      )}
+    </div>
+  </form>
+</Section>
   );
 };
