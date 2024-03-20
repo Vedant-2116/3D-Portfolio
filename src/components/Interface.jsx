@@ -2,8 +2,8 @@ import { ValidationError, useForm } from "@formspree/react";
 import { motion } from "framer-motion";
 import { useAtom } from "jotai";
 import { Canvas,useLoader } from '@react-three/fiber';
-import {  useState,useEffect,useRef } from 'react';
-import { OrbitControls } from "@react-three/drei";
+import {  useState,useRef } from 'react';
+import { OrbitControls} from "@react-three/drei";
 import { TextureLoader } from "three";
 import { currentProjectAtom, projects } from "./Projects";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -101,7 +101,7 @@ const AboutSection = (props) => {
           <span className="bg-transparent px-1 italic">Vedantsinh Gohel</span>
         </h1>
       </div>
-
+      
       <motion.p
         className="text-lg text-gray-600 mt-4"
         initial={{
@@ -341,6 +341,7 @@ const ProjectsSection = () => {
     </Section>
   );
 };
+
 
 const ContactSection = () => {
   const [state, handleSubmit] = useForm("mayzgjbd");
