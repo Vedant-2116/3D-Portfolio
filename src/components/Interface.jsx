@@ -1,13 +1,13 @@
 import { ValidationError, useForm } from "@formspree/react";
 import { motion } from "framer-motion";
 import { useAtom } from "jotai";
-import { Canvas,useLoader } from '@react-three/fiber';
-import {  useState,useRef } from 'react';
-import { OrbitControls} from "@react-three/drei";
+import { Canvas, useLoader } from '@react-three/fiber';
+import { useState, useRef } from 'react';
+import { OrbitControls } from "@react-three/drei";
 import { TextureLoader } from "three";
 import { currentProjectAtom, projects } from "./Projects";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGithub,faLinkedin } from '@fortawesome/free-brands-svg-icons';
+import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { FaPhoneAlt, FaMapMarkerAlt } from "react-icons/fa";
 import {
   javascript,
@@ -25,17 +25,16 @@ import {
   threejs,
 } from "../assets";
 
-
 const Section = (props) => {
   const { children, mobileTop } = props;
 
   return (
     <motion.section
       className={`
-  h-screen w-screen p-8 max-w-screen-2xl mx-auto
-  flex flex-col items-start
-  ${mobileTop ? "justify-start md:justify-center" : "justify-center"}
-  `}
+        h-screen w-screen p-8 max-w-screen-2xl mx-auto
+        flex flex-col items-start
+        ${mobileTop ? "justify-start md:justify-center" : "justify-center"}
+      `}
       initial={{
         opacity: 0,
         y: 50,
@@ -69,30 +68,24 @@ export const Interface = (props) => {
 const AboutSection = (props) => {
   const { setSection } = props;
 
-  // Function to handle downloading resume
   const handleDownloadResume = () => {
-    // Replace 'resume.pdf' with the actual URL or path to your resume
     window.open('vedant/Gohel_Vedantsinh_CV.pdf', '_blank');
   };
 
-  // Function to handle downloading cover letter
   const handleDownloadCoverLetter = () => {
-    // Replace 'cover_letter.pdf' with the actual URL or path to your cover letter
     window.open('vedant/Gohel_Vedant_-_Cover_Letter (2).pdf', '_blank');
   };
 
   return (
     <Section mobileTop>
       <div className="flex fixed top-4 left-4">
-      {/* GitHub Link */}
-      <a href="https://github.com/Vedant-2116" target="_blank" rel="noopener noreferrer" className="github-icon">
-        <FontAwesomeIcon icon={faGithub} className="text-gray-600 w-8 h-8 mr-2 md:mr-4" />
-      </a>
-      {/* LinkedIn Link */}
-      <a href="https://www.linkedin.com/in/gohelvedant/" target="_blank" rel="noopener noreferrer" className="linkedin-icon">
-        <FontAwesomeIcon icon={faLinkedin} className="text-gray-600 w-8 h-8 mr-2 md:mr-4" />
-      </a>
-    </div>
+        <a href="https://github.com/Vedant-2116" target="_blank" rel="noopener noreferrer" className="github-icon">
+          <FontAwesomeIcon icon={faGithub} className="text-gray-600 w-8 h-8 mr-2 md:mr-4" />
+        </a>
+        <a href="https://www.linkedin.com/in/gohelvedant/" target="_blank" rel="noopener noreferrer" className="linkedin-icon">
+          <FontAwesomeIcon icon={faLinkedin} className="text-gray-600 w-8 h-8 mr-2 md:mr-4" />
+        </a>
+      </div>
 
       <div className="flex items-center">
         <h1 className="text-4xl md:text-6xl font-extrabold leading-snug mt-8 md:mt-0">
@@ -101,7 +94,7 @@ const AboutSection = (props) => {
           <span className="bg-transparent px-1 italic">Vedantsinh Gohel</span>
         </h1>
       </div>
-      
+
       <motion.p
         className="text-lg text-gray-600 mt-4"
         initial={{
@@ -122,7 +115,6 @@ const AboutSection = (props) => {
         Working To Make World Easy to Access
       </motion.p>
       <div className="flex flex-col md:flex-row md:items-center md:space-x-4">
-        {/* Download Resume Button */}
         <motion.button
           onClick={handleDownloadResume}
           className={`bg-indigo-600 text-white py-3 px-6 
@@ -142,7 +134,6 @@ const AboutSection = (props) => {
         >
           <span className="hidden md:inline-block ml-2"> Resume</span>
         </motion.button>
-        {/* Download Cover Letter Button */}
         <motion.button
           onClick={handleDownloadCoverLetter}
           className={`bg-indigo-600 text-white py-3 px-6 
@@ -186,11 +177,6 @@ const AboutSection = (props) => {
   );
 };
 
-
-
-
-
-
 const skills = [
   {
     name: "HTML 5",
@@ -223,7 +209,8 @@ const skills = [
   {
     name: "MongoDB",
     icon: mongodb,
-
+  },
+  {
     name: "Three JS",
     icon: threejs,
   },
@@ -245,34 +232,29 @@ const skills = [
   },
 ];
 
-
 const SkillBall = ({ position, icon }) => {
   const texture = useLoader(TextureLoader, icon);
   const meshRef = useRef();
 
   return (
     <group position={position}>
-      {/* Ball */}
       <mesh ref={meshRef}>
-        <sphereGeometry args={[1.5, 32, 32]} /> {/* Adjust radius as needed */}
+        <sphereGeometry args={[1.5, 32, 32]} />
         <meshStandardMaterial attach="material" color={'#CCCCCC'} />
       </mesh>
-      
-      {/* Logo */}
-      <mesh position={[0, 0, 1.5]}> {/* Adjust position as needed */}
-        <planeGeometry args={[2, 2]} /> {/* Adjust size as needed */}
+      <mesh position={[0, 0, 1.5]}>
+        <planeGeometry args={[2, 2]} />
         <meshBasicMaterial attach="material" map={texture} transparent />
       </mesh>
     </group>
   );
 };
 
-
 const SkillsSection = () => {
   const groupRef = useRef();
 
   const numLogos = skills.length;
-  const circleRadius = 10; // Increase radius to 10
+  const circleRadius = 10;
   const angleIncrement = (2 * Math.PI) / numLogos;
 
   return (
@@ -303,12 +285,6 @@ const SkillsSection = () => {
     </Section>
   );
 };
-
-
-
-
-
-
 
 const ProjectsSection = () => {
   const [currentProject, setCurrentProject] = useAtom(currentProjectAtom);
@@ -342,7 +318,6 @@ const ProjectsSection = () => {
   );
 };
 
-
 const ContactSection = () => {
   const [state, handleSubmit] = useForm("mayzgjbd");
   const [phoneNumber] = useState("+19056171621");
@@ -362,7 +337,6 @@ const ContactSection = () => {
       <form onSubmit={handleSubmit}>
         <div className="flex flex-wrap">
           <div className="mt-8 p-4 rounded-md w-48 md:w-64 max-w-full mr-4">
-            {/* Phone Number */}
             <div className="flex items-center">
               <FaPhoneAlt
                 onClick={handlePhoneClick}
@@ -374,7 +348,6 @@ const ContactSection = () => {
           </div>
 
           <div className="mt-8 p-4 rounded-md w-48 md:w-64 max-w-full">
-            {/* Address */}
             <div className="flex items-center">
               <FaMapMarkerAlt
                 onClick={handleLocationClick}
@@ -447,3 +420,4 @@ const ContactSection = () => {
   );
 };
 
+export default Interface;
