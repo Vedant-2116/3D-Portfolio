@@ -9,21 +9,6 @@ import { currentProjectAtom, projects } from "./Projects";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { FaPhoneAlt, FaMapMarkerAlt } from "react-icons/fa";
-import {
-  javascript,
-  typescript,
-  html,
-  css,
-  reactjs,
-  redux,
-  tailwind,
-  nodejs,
-  mongodb,
-  git,
-  figma,
-  docker,
-  threejs,
-} from "../assets";
 
 const Section = (props) => {
   const { children, mobileTop } = props;
@@ -180,60 +165,61 @@ const AboutSection = (props) => {
 const skills = [
   {
     name: "HTML 5",
-    icon: html,
+    image: "tech/html.png",
   },
   {
     name: "CSS 3",
-    icon: css,
+    image: "tech/css.png",
   },
   {
     name: "JavaScript",
-    icon: javascript,
+    image: "tech/javascript.png",
   },
   {
     name: "TypeScript",
-    icon: typescript,
+    image: "tech/typescript.png",
   },
   {
     name: "React JS",
-    icon: reactjs,
+    image: "tech/reactjs.png",
   },
   {
     name: "Tailwind CSS",
-    icon: tailwind,
+    image: "tech/tailwind.png",
   },
   {
     name: "Node JS",
-    icon: nodejs,
+    image: "tech/nodejs.png",
   },
   {
     name: "MongoDB",
-    icon: mongodb,
+    image: "tech/mongodb.png",
   },
   {
     name: "Three JS",
-    icon: threejs,
+    image: "tech/threejs.svg",
   },
   {
-    name: "figma",
-    icon: figma,
+    name: "Figma",
+    image: "tech/figma.png",
   },
   {
-    name: "docker",
-    icon: docker,
+    name: "Docker",
+    image: "tech/docker.png",
   },
   {
-    name: "redux",
-    icon: redux,
+    name: "Redux",
+    image: "tech/redux.png",
   },
   {
-    name: "git",
-    icon: git,
+    name: "Git",
+    image: "tech/git.png",
   },
 ];
 
-const SkillBall = ({ position, icon }) => {
-  const texture = useLoader(TextureLoader, icon);
+
+const SkillBall = ({ position, image }) => {
+  const texture = useLoader(TextureLoader, image);
   const meshRef = useRef();
 
   return (
@@ -275,7 +261,7 @@ const SkillsSection = () => {
                     circleRadius * Math.sin(index * angleIncrement),
                     -1
                   ]}
-                  icon={skill.icon}
+                  image={skill.image}
                 />
               ))}
             </group>

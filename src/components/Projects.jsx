@@ -10,31 +10,31 @@ export const projects = [
   {
     title: "BlO",
     url: "https://github.com/Vedant-2116/BLO.git",
-    image: "src/assets/tech/threejs.svg",
+    image: "tech/threejs.svg",
     description: " A Fashion Website With Chatbot and AR",
   },
   {
     title: "Portfolio ",
     url: "https://github.com/Vedant-2116/3D-Portfolio.git",
-    image: "src/assets/tech/javascript.png",
+    image: "tech/javascript.png",
     description: "A Portfolio Website Which You Are On",
   },
   {
     title: "TO Do App",
     url: "https://github.com/Vedant-2116/OrganizeMe.git",
-    image: "src/assets/tech/reactjs.png",
+    image: "tech/reactjs.png",
     description: "To Do App To Organize Tasks ",
   },
   {
     title: "Cafe Billing",
     url: "https://github.com/Vedant-2116/Cafe_Billling_System.git",
-    image: "src/assets/tech/nodejs.png",
+    image: "tech/nodejs.png",
     description: "Easing The Sysytem To Handle Cafe Bills",
   },
   {
     title: "News",
     url: "https://github.com/Vedant-2116/News.git",
-    image: "src/assets/tech/figma.png",
+    image: "tech/figma.png",
     description: "A News Website To See News and Can Comment",
   },
 ];
