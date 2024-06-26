@@ -119,25 +119,6 @@ const AboutSection = (props) => {
         >
           <span className="hidden md:inline-block ml-2"> Resume</span>
         </motion.button>
-        <motion.button
-          onClick={handleDownloadCoverLetter}
-          className={`bg-indigo-600 text-white py-3 px-6 
-          rounded-lg font-bold text-base md:text-lg mt-4 md:mt-4`}
-          initial={{
-            opacity: 0,
-            y: 25,
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-          transition={{
-            duration: 1,
-            delay: 2,
-          }}
-        >
-          <span className="hidden md:inline-block ml-2"> Cover Letter</span>
-        </motion.button>
       </div>
       <motion.button
         onClick={() => setSection(3)}
