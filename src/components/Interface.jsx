@@ -9,6 +9,8 @@ import { currentProjectAtom, projects } from "./Projects";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { FaPhoneAlt, FaMapMarkerAlt } from "react-icons/fa";
+import emailjs from "emailjs-com";
+
 
 const Section = (props) => {
   const { children, mobileTop } = props;
@@ -286,16 +288,53 @@ const ProjectsSection = () => {
 };
 
 const ContactSection = () => {
-  const [state, handleSubmit] = useForm("mayzgjbd");
+  const [state, setState] = useState({ succeeded: false, errors: [], submitting: false });
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [phoneNumber] = useState("+19056171621");
-  const address = "960 Markham Rd, Scarborough, ON M1H 2Y4";
-
+  const address = "10 Cardwell Av. #28, Scarborough, ON M1S 4Z2";
+  
   const handlePhoneClick = () => {
     window.location.href = `tel:${phoneNumber}`;
   };
 
   const handleLocationClick = () => {
-    window.open("https://www.google.com/maps/place/960+Markham+Rd,+Scarborough,+ON+M1H+2Y4/@43.7717186,-79.2310163,155m/data=!3m1!1e3!4m6!3m5!1s0x89d4d114176c4e23:0xd9a959eb12c5ac88!8m2!3d43.7716896!4d-79.230209!16s%2Fg%2F11vs7vfz0q?entry=ttu");
+    window.open("https://www.google.com/maps/place/10+Cardwell+Ave+%2328,+Scarborough,+ON+M1S+4Z2/@43.7932696,-79.2737025,17z");
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setState((prev) => ({ ...prev, submitting: true }));
+  
+    // Use emailjs to send the form data
+    emailjs
+      .sendForm(
+        "service_cmooh52", // Your service ID
+        "template_gy2349l", // Your template ID
+        event.target, // The form element
+        "5nRPGq6M1i5YxUtlm" // Your user ID (private key)
+      )
+      .then(
+        (result) => {
+          setState({ succeeded: true, errors: [], submitting: false });
+  
+          // Display the thank you message and then clear the form after 10 seconds
+          setTimeout(() => {
+            // Reset the form state
+            setFormData({ name: "", email: "", message: "" }); // Reset formData
+            
+            // Reset the state and hide the success message
+            setState({ succeeded: false, errors: [], submitting: false }); // Reset success state
+          }, 1000); 
+        },
+        (error) => {
+          setState({ succeeded: false, errors: [error.text], submitting: false });
+        }
+      );
   };
 
   return (
@@ -331,6 +370,13 @@ const ContactSection = () => {
             <p className="text-gray-900 text-center">Thanks for your message!</p>
           ) : (
             <>
+              {state.errors.length > 0 && (
+                <div className="text-red-500 text-center mb-4">
+                  {state.errors.map((error, index) => (
+                    <p key={index}>{error}</p>
+                  ))}
+                </div>
+              )}
               <label htmlFor="name" className="font-medium text-gray-900 block mb-1">
                 Name
               </label>
@@ -338,46 +384,36 @@ const ContactSection = () => {
                 type="text"
                 name="name"
                 id="name"
+                value={formData.name}
+                onChange={handleInputChange}
                 className="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 p-2 md:p-3"
               />
-              <label
-                htmlFor="email"
-                className="font-medium text-gray-900 block mb-1 mt-8"
-              >
+              <label htmlFor="email" className="font-medium text-gray-900 block mb-1 mt-8">
                 Email
               </label>
               <input
                 type="email"
                 name="email"
                 id="email"
+                value={formData.email}
+                onChange={handleInputChange}
                 className="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 p-2 md:p-3"
               />
-              <ValidationError
-                className="mt-1 text-red-500"
-                prefix="Email"
-                field="email"
-                errors={state.errors}
-              />
-              <label
-                htmlFor="message"
-                className="font-medium text-gray-900 block mb-1 mt-8"
-              >
+              <label htmlFor="message" className="font-medium text-gray-900 block mb-1 mt-8">
                 Message
               </label>
               <textarea
                 name="message"
                 id="message"
+                value={formData.message}
+                onChange={handleInputChange}
                 className="h-24 block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 p-2 md:p-3"
-              />
-              <ValidationError
-                className="mt-1 text-red-500"
-                errors={state.errors}
               />
               <button
                 disabled={state.submitting}
                 className="bg-indigo-600 text-white py-3 px-6 rounded-lg font-bold text-lg mt-8"
               >
-                Submit
+                {state.submitting ? "Submitting..." : "Submit"}
               </button>
             </>
           )}
